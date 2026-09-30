@@ -1,12 +1,15 @@
-# PhotoEditPro — GitHub Actions APK Build
+# Photo Edit Pro
 
-## Phone-only build
+Android photo editor starter project.
 
-1. Create a GitHub repository.
-2. Upload the contents of this ZIP so that `PhotoEditPro/settings.gradle` exists.
-3. Upload `.github/workflows/build-apk.yml` from this package.
-4. Open **Actions → Build PhotoEditPro APK → Run workflow**.
-5. When the workflow finishes, open the run and download the **PhotoEditPro-debug-apk** artifact.
-6. Extract the artifact ZIP and install the `.apk` on your Android phone.
+## Features
+- Open photo from gallery
+- Brightness, contrast and saturation controls
+- AI Style presets: Cinematic, Warm Sunset, Cool Portrait, Vintage, HDR Pop, Soft Film
+- Black & White
+- Rotate 90 degrees
+- 2x upscale
+- High-quality JPEG save
 
-Note: GitHub Actions builds the project in the cloud; the APK is not produced by the phone itself.
+### Note about AI Style
+The current AI Style feature is an on-device preset/color-processing implementation. It does not require an internet connection. A future version can connect to a real generative/AI image model for effects such as anime, Ghibli-style, portrait enhancement, background replacement, and true super-resolution.
