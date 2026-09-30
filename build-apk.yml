@@ -1,0 +1,41 @@
+name: Build PhotoEditPro APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main", "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: gradle
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Build debug APK
+        working-directory: PhotoEditPro
+        run: |
+          chmod +x gradlew 2>/dev/null || true
+          if [ -f ./gradlew ]; then
+            ./gradlew assembleDebug
+          else
+            gradle assembleDebug
+          fi
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: PhotoEditPro-debug-apk
+          path: PhotoEditPro/app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
