@@ -1,15 +1,40 @@
-# Photo Edit Pro
+name: Build PhotoEditPro APK
 
-Android photo editor starter project.
+on:
+  workflow_dispatch:
 
-## Features
-- Open photo from gallery
-- Brightness, contrast and saturation controls
-- AI Style presets: Cinematic, Warm Sunset, Cool Portrait, Vintage, HDR Pop, Soft Film
-- Black & White
-- Rotate 90 degrees
-- 2x upscale
-- High-quality JPEG save
+  push:
+    branches:
+      - main
+      - master
 
-### Note about AI Style
-The current AI Style feature is an on-device preset/color-processing implementation. It does not require an internet connection. A future version can connect to a real generative/AI image model for effects such as anime, Ghibli-style, portrait enhancement, background replacement, and true super-resolution.
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.10'
+
+      - name: Build APK
+        run: gradle :app:assembleDebug --no-daemon
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: PhotoEditPro-APK
+          path: app/build/outputs/apk/debug/app-debug.apk
